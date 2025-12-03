@@ -1,0 +1,15 @@
+# Python cache
+__pycache__/
+*.pyc
+
+# Jupyter
+.notebooks/.ipynb_checkpoints/
+.ipynb_checkpoints/
+.jupyter/
+
+# Virtual env
+venv/
+
+# OS / editor junk
+.DS_Store
+.vscode/
