@@ -1,15 +1,58 @@
-# Python cache
+# Python cache / bytecode
 __pycache__/
 *.pyc
-
-# Jupyter
-.notebooks/.ipynb_checkpoints/
+# Secrets / env
+.env
+.env.*
+*.env
+# MLflow artifacts
+mlruns/
+mlflow.db
+# Large model artifacts
+models/*.pkl
+*.pkl
+# Notebooks checkpoints
 .ipynb_checkpoints/
-.jupyter/
-
-# Virtual env
-venv/
-
-# OS / editor junk
-.DS_Store
+notebooks/.ipynb_checkpoints/
+notebooks/.jupyter/
+# Editor/OS junk
 .vscode/
+Thumbs.db
+# Optional logs
+logs/
+
+# Virtual envs
+.venv/
+venv/
+env/
+ENV/
+
+# Pytest / coverage / type caches
+.pytest_cache/
+.coverage
+coverage.xml
+htmlcov/
+
+# Type & lint caches
+.mypy_cache/
+.pylint.d/
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# IDE/editor
+.idea/
+.vscode/
+*.sublime-project
+*.sublime-workspace
+
+# macOS
+.DS_Store
+
+# Optional: keep a tiny sample model, but ignore all others
+models/
+!models/
+!models/sample/
+!models/metadata.json

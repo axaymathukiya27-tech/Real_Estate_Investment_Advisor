@@ -1,0 +1,31 @@
+{
+  "models": [
+    {
+      "name": "tuned_classification_model",
+      "file": "models/sample/tuned_classification_model.pkl",
+      "saved_at": "2025-12-26T00:00:00Z",
+      "framework": "scikit-learn",
+      "sample": true,
+      "notes": "Included as a tiny demo sample for local tests. For production, use MLflow or an external artifact store.",
+      "features": []
+    },
+    {
+      "name": "tuned_regression_model",
+      "file": "models/tuned_regression_model.pkl",
+      "saved_at": "2025-12-26T00:00:00Z",
+      "framework": "scikit-learn",
+      "sample": false,
+      "notes": "Full artifact (not recommended to keep in repo); consider moving to MLflow or external storage.",
+      "features": []
+    },
+    {
+      "name": "baseline_random_forest_classifier",
+      "file": "models/baseline_random_forest_classifier.pkl",
+      "saved_at": "2025-12-26T00:00:00Z",
+      "framework": "scikit-learn",
+      "sample": false,
+      "notes": "Baseline artifact - consider removing from repo.",
+      "features": []
+    }
+  ]
+}

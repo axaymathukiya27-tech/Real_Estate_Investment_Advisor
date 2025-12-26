@@ -18,33 +18,64 @@ This project includes **EDA, preprocessing, feature engineering, baseline modeli
 
 ---
 
-## 📂 Folder Structure
+## 📂 Project structure
 ```bash
-Real_Estate_Projects/
-│
+REAL_ESTATE_INVESTMENT_ADVISOR/
+
+├── README.md                        # Project overview & quickstart
+├── LICENSE                          # Project license
+├── pyproject.toml / setup.cfg       # Optional packaging / dev tools
+├── requirements.txt                 # Primary dependencies
+├── requirements-dev.txt             # Dev/test dependencies
+├── .gitignore
+├── .github/                         # CI workflows (tests, lint, notebooks)
+│   └── workflows/ci.yml
 ├── data/
-│   ├── raw/
-│   └── processed/
-│
-├── models/
-│   ├── best_classification_model.pkl
-│   └── best_regression_model.pkl
-│
-├── notebooks/
+│   ├── raw/                         # Small sample raw CSVs (do NOT commit large datasets)
+│   └── processed/                   # Canonical processed snapshot used for demos/tests (small)
+├── docs/                            # Architecture & reproducibility docs
+├── notebooks/                       # Cleaned notebooks (outputs stripped)
 │   ├── 01_eda.ipynb
 │   ├── 02_feature_engineering.ipynb
 │   ├── 03_model_baseline.ipynb
-│   └── 04_model_tuning.ipynb
-│
-├── src/
+│   └── 04_hyperparameter_tuning.ipynb
+├── scripts/                         # Utility scripts for data generation & validation
+│   ├── generate_processed.py
+│   └── validate_processed.py
+├── src/                             # Production-ready package (importable)
+│   ├── __init__.py
+│   ├── config.py
 │   ├── data/
+│   │   ├── load.py
+│   │   └── preprocess.py
 │   ├── features/
-│   └── models/
-│
-├── Streamlit_app.py
-├── requirements.txt
-└── README.md
+│   │   ├── build_features.py
+│   │   └── feature_config.json
+│   ├── models/
+│   │   ├── train.py
+│   │   ├── tuning.py
+│   │   ├── evaluate.py
+│   │   ├── predict.py
+│   │   └── mlflow_setup.py
+│   ├── app/                         # App entrypoints (Streamlit / example scripts)
+│   │   └── streamlit_app.py
+│   └── api/                         # Optional: FastAPI serving code
+├── models/                          # Optional: tiny sample model + metadata (do NOT commit large artifacts)
+│   └── metadata.json                # Model provenance and pointers (required if models present)
+└── tests/                           # Unit & integration tests (pytest)
+    ├── test_features.py
+    └── test_train_save.py
 ```
+
+Run the Streamlit demo locally:
+```bash
+# from repo root
+streamlit run src/app/streamlit_app.py
+```
+
+Notes:
+- Do not commit large model artifacts, experiment runs, or raw datasets to the repo; use MLflow, S3 or a dedicated artifact store instead.
+- Keep notebooks as demonstrations only; move shared logic into `src/` to make code production-ready.
 
 ---
 
@@ -86,7 +117,10 @@ streamlit run Streamlit_app.py
 ```bash
 # Create and activate environment
 python -m venv venv
-.\venv\Scripts\activate    # Windows
+# Windows
+venv\Scripts\activate
+# Linux/Mac
+source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
@@ -121,3 +155,4 @@ streamlit run Streamlit_app.py
 **Akshay**  
 Data Analyst & ML Engineer in progress  
 India 🇮🇳
+

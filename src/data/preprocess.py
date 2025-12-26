@@ -4,6 +4,7 @@ from typing import Sequence
 import pandas as pd
 
 
+
 # Columns where we will cap extreme values
 OUTLIER_COLS = ["Price_in_Lakhs", "Size_in_SqFt", "Price_per_SqFt"]
 

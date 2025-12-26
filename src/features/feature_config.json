@@ -1,0 +1,39 @@
+{
+  "version": "1.0",
+  "numeric_features": [
+    "BHK",
+    "Size_in_SqFt",
+    "Price_in_Lakhs",
+    "Price_per_SqFt",
+    "Year_Built",
+    "Floor_No",
+    "Total_Floors",
+    "Age_of_Property",
+    "Nearby_Schools",
+    "Nearby_Hospitals",
+    "Furnished_Status_Enc",
+    "Availability_Status_Enc",
+    "Transport_Score",
+    "Security_Score",
+    "Investment_Score",
+    "Annual_Growth_Rate"
+  ],
+  "categorical_features": [
+    "State",
+    "City",
+    "Locality",
+    "Property_Type",
+    "Furnished_Status",
+    "Public_Transport_Accessibility",
+    "Parking_Space",
+    "Security",
+    "Amenities",
+    "Facing",
+    "Owner_Type",
+    "Availability_Status"
+  ],
+  "targets": {
+    "classification": "Good_Investment",
+    "regression": "Future_Price_5Y"
+  }
+}
