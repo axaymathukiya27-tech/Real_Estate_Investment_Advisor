@@ -37,17 +37,40 @@ Additionally, MLflow runs include:
 
 ## How to reproduce a run locally
 
-1. Create a Python environment per `requirements.txt`.
-2. Run your notebook (e.g., `03_model_baseline.ipynb`) or call the training API:
-   - `python -m src.models.train` (if exposed) or run functions from `src.models`.
-3. Open the MLflow UI:
+1. Create a Python 3.11+ virtual environment and activate it:
+   ```bash
+   python -m venv .venv
+   # Windows (PowerShell)
+   .\.venv\Scripts\Activate.ps1
+   # Windows (cmd)
+   .\.venv\Scripts\activate
+   # Linux/Mac
+   source .venv/bin/activate
+   ```
+2. Install dependencies:
+   ```bash
+   python -m pip install -r requirements.txt
+   # (optional) install dev/test deps
+   python -m pip install -r requirements-dev.txt
+   ```
+3. Record current git commit (helpful for provenance):
+   ```bash
+   git rev-parse HEAD
+   ```
+   Consider logging this SHA as an MLflow tag inside your run (e.g., `mlflow.set_tag("git_commit", "<sha>")`).
+4. Run a training run or notebook:
+   - CLI: `python -m src.models.train`
+   - Notebook (reproducible run): use `papermill` or `nbconvert` to execute notebooks in CI (recommended):
+     ```bash
+     papermill notebooks/03_model_baseline.ipynb notebooks/03_model_baseline.executed.ipynb -p INPUT_PATH data/processed/housing_with_features.csv
+     ```
+5. Open the MLflow UI (example on Windows):
+   ```bash
+   mlflow ui --backend-store-uri file:///D:/path/to/repo/mlruns
+   ```
+6. Inspect runs under `real_estate_investment` and compare by tags/metrics (`run_type`, `best_cv_mean`, `best_cv_std`, `git_commit`).
 
-```bash
-mlflow ui --backend-store-uri file:///<path-to-repo>/mlruns
-```
-
-4. Inspect experiments under `real_estate_investment` and compare runs using
-   `run_type` and the logged `best_cv_mean` and `best_cv_std` metrics.
+*Notes*: Log the Python version and platform (e.g., `platform.platform()` / `sys.version`) to runs when possible for full reproducibility.
 
 ## Notes
 

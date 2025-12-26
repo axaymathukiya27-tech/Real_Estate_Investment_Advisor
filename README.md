@@ -24,16 +24,13 @@ REAL_ESTATE_INVESTMENT_ADVISOR/
 
 ├── README.md                        # Project overview & quickstart
 ├── LICENSE                          # Project license
-├── pyproject.toml / setup.cfg       # Optional packaging / dev tools
 ├── requirements.txt                 # Primary dependencies
-├── requirements-dev.txt             # Dev/test dependencies
 ├── .gitignore
 ├── .github/                         # CI workflows (tests, lint, notebooks)
 │   └── workflows/ci.yml
 ├── data/
 │   ├── raw/                         # Small sample raw CSVs (do NOT commit large datasets)
 │   └── processed/                   # Canonical processed snapshot used for demos/tests (small)
-├── docs/                            # Architecture & reproducibility docs
 ├── notebooks/                       # Cleaned notebooks (outputs stripped)
 │   ├── 01_eda.ipynb
 │   ├── 02_feature_engineering.ipynb
@@ -46,20 +43,24 @@ REAL_ESTATE_INVESTMENT_ADVISOR/
 │   ├── __init__.py
 │   ├── config.py
 │   ├── data/
+│       ├── __init__.py
 │   │   ├── load.py
 │   │   └── preprocess.py
 │   ├── features/
+│   │  ├── __init__.py
 │   │   ├── build_features.py
 │   │   └── feature_config.json
 │   ├── models/
+│   │  ├── __init__.py
 │   │   ├── train.py
 │   │   ├── tuning.py
 │   │   ├── evaluate.py
 │   │   ├── predict.py
 │   │   └── mlflow_setup.py
-│   ├── app/                         # App entrypoints (Streamlit / example scripts)
-│   │   └── streamlit_app.py
-│   └── api/                         # Optional: FastAPI serving code
+│── app/ 
+│   └── __init__.py                       
+│   └── streamlit_app.py
+│   └── validation.py                    
 ├── models/                          # Optional: tiny sample model + metadata (do NOT commit large artifacts)
 │   └── metadata.json                # Model provenance and pointers (required if models present)
 └── tests/                           # Unit & integration tests (pytest)
@@ -108,25 +109,39 @@ Notes:
 
 Run locally:
 ```bash
-streamlit run Streamlit_app.py
+streamlit run src/app/streamlit_app.py
 ```
 
 ---
 
 ## ▶️ Installation & Setup
 ```bash
-# Create and activate environment
-python -m venv venv
-# Windows
-venv\Scripts\activate
+# Create and activate environment (Python 3.11+ recommended)
+python -m venv .venv
+# Windows (PowerShell)
+.\.venv\Scripts\Activate.ps1
+# Windows (cmd)
+.\.venv\Scripts\activate
 # Linux/Mac
-source venv/bin/activate
+source .venv/bin/activate
 
-# Install dependencies
-pip install -r requirements.txt
+# Install runtime deps
+python -m pip install -r requirements.txt
+
+# (Optional) install dev/test deps
+python -m pip install -r requirements-dev.txt
+
+# Run tests
+pytest -q
 
 # Run the Streamlit app
-streamlit run Streamlit_app.py
+streamlit run src/app/streamlit_app.py
+```
+
+**Optional — install pre-commit hooks:**
+```bash
+python -m pip install pre-commit
+pre-commit install
 ```
 
 ---

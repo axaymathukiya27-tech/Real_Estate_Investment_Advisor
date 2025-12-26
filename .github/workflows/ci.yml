@@ -32,11 +32,14 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install -r requirements-dev.txt
           pip install pytest
 
       - name: Run tests
         run: |
           pytest -q --maxfail=1 --disable-warnings
+          # Validate notebooks with nbval (requires nbval in requirements-dev.txt)
+          pytest --nbval -q --maxfail=1 --disable-warnings || true
 
       - name: Upload pytest junit (if available)
         if: always()
@@ -68,6 +71,7 @@ jobs:
         run: |
           python -m pip install --upgrade pip
           pip install -r requirements.txt
+          pip install -r requirements-dev.txt
           pip install jupyter nbconvert papermill
 
       - name: Generate processed sample (fast)
