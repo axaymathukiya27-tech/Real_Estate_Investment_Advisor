@@ -21,17 +21,22 @@ from src.config import BEST_CLASSIFIER, BEST_REGRESSOR
 # ==================== CONFIG ====================
 
 # make DATA_DIR robust: resolve relative to this file's location
+PROJECT_ROOT = Path(__file__).resolve().parents[1]
 BASE_DIR = Path(__file__).resolve().parent
-DATA_DIR = BASE_DIR / "data" / "processed"
-MODEL_DIR = BASE_DIR / "models"
+DATA_DIR = PROJECT_ROOT / "data" / "processed"
+MODEL_DIR = PROJECT_ROOT / "models"
 
 CLF_MODEL_PATH = MODEL_DIR / BEST_CLASSIFIER
 REG_MODEL_PATH = MODEL_DIR / BEST_REGRESSOR
-METADATA_PATH = BASE_DIR / "src" / "features" / "feature_config.json"
+METADATA_PATH = PROJECT_ROOT / "models" / "metadata.json"
 PROCESSED_DATA_PATH = DATA_DIR / "housing_with_features.csv"
 
 # Load feature config
-with open(METADATA_PATH) as f:
+if not METADATA_PATH.exists():
+    st.error(f"❌ Missing metadata file: {METADATA_PATH}")
+    st.stop()
+
+with open(METADATA_PATH, "r") as f:
     feature_config = json.load(f)
 
 NUMERIC_FEATURES = set(feature_config.get("numeric_features", []))
