@@ -33,12 +33,7 @@ PROCESSED_DATA_PATH = DATA_DIR / "housing_with_features.csv"
 
 # Load feature config from canonical source (features package)
 from src.features.build_features import load_feature_config
-
-try:
-    feature_config = load_feature_config()
-except Exception as e:
-    st.error(f"❌ Missing or invalid feature_config.json: {e}")
-    st.stop()
+feature_config = load_feature_config()
 
 NUMERIC_FEATURES = set(feature_config.get("numeric_features", []))
 CATEGORICAL_FEATURES = set(feature_config.get("categorical_features", []))
