@@ -31,13 +31,14 @@ REG_MODEL_PATH = MODEL_DIR / BEST_REGRESSOR
 METADATA_PATH = PROJECT_ROOT / "models" / "metadata.json"
 PROCESSED_DATA_PATH = DATA_DIR / "housing_with_features.csv"
 
-# Load feature config
-if not METADATA_PATH.exists():
-    st.error(f"❌ Missing metadata file: {METADATA_PATH}")
-    st.stop()
+# Load feature config from canonical source (features package)
+from src.features.build_features import load_feature_config
 
-with open(METADATA_PATH, "r") as f:
-    feature_config = json.load(f)
+try:
+    feature_config = load_feature_config()
+except Exception as e:
+    st.error(f"❌ Missing or invalid feature_config.json: {e}")
+    st.stop()
 
 NUMERIC_FEATURES = set(feature_config.get("numeric_features", []))
 CATEGORICAL_FEATURES = set(feature_config.get("categorical_features", []))
@@ -277,7 +278,7 @@ def main():
                     risk = "🔴 High Risk"
    
                 # Display results
-                st.markdown(""""
+                st.markdown("""
                 <div style="
                     padding:20px;
                     border-radius:12px;
@@ -329,7 +330,10 @@ def main():
                 st.success("✓ Prediction complete!")
             
             except Exception as e:
+                logging.exception("Prediction failed during user request")
+                import traceback
                 st.error(f"❌ Prediction error: {e}")
+                st.error(traceback.format_exc())
     
     # ==================== TAB 2: INSIGHTS ====================
     
